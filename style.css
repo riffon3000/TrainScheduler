@@ -2,7 +2,7 @@ body {
     background-color: #b3b3b3;
 }
 
-header, div, footer {
+.container {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #f5f5f5;
 }
