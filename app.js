@@ -73,7 +73,7 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(trainAway);
 
     // calculate next train arrival
-    var trainNext = moment().add(trainAway, "X").format("HH:mm a");
+    var trainNext = moment.parseZone().add(trainAway, "m").format("h:mm a");
     console.log(trainNext);
 
     // create new row
