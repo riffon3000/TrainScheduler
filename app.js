@@ -9,7 +9,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-// handle for database
+// handle for firebase.database();
 var database = firebase.database();
 
 // Click event listener for add-train button w/prevent form submission upon page load
@@ -35,4 +35,39 @@ $("#add-train").on("click", function (event) {
     };
     console.log(newTrain);
 
+    // Push newTrain data to database
+    database.ref().push(newTrain);
+
+    // Reset form fields
+    $("#train-input").val("");
+    $("#dest-input").val("");
+    $("#start-input").val("");
+    $("#rate-input").val("");
+});
+
+// Event listener for addition to Firebase database and adding row to #new-trains tbody
+database.ref().on("child_added", function(childSnapshot){
+    console.log(childSnapshot.val());
+    
+    // handle for childSnapshot.val();
+    var snap = childSnapshot.val();
+
+    // grab variables from snap
+    var trainName = snap.name;
+    console.log(trainName);
+    var trainDest = snap.dest;
+    console.log(trainDest);
+    var trainStart = snap.start;
+    console.log(moment(trainStart,"X").format("HH:mm a"));
+    var trainRate = snap.rate;
+    console.log(trainRate);
+
+    // create new row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(trainDest),
+        $("<td>").text(trainRate),
+        $("<td>").text(trainNext),
+        $("<td>").text(trainAway)
+      );
 });
