@@ -13,7 +13,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // Click event listener for add-train button w/prevent form submission upon page load
-$("#add-train").on("click", function(event) {
+$("#add-train").on("click", function (event) {
     event.preventDefault();
 
     // grab user inputs
@@ -21,8 +21,18 @@ $("#add-train").on("click", function(event) {
     console.log(trainName);
     var trainDest = $("#dest-input").val().trim();
     console.log(trainDest);
-    var trainFirst = moment($("#first-input").val(), "h:mm a").format("X"); 
-    console.log(trainFirst);
-    var trainFreq = $("#freq-input").val();
-    console.log(trainFreq);
-}
+    var trainStart = moment($("#start-input").val(), "HH:mm a").format("X");
+    console.log(moment(trainStart,"X").format("HH:mm a"));
+    var trainRate = $("#rate-input").val();
+    console.log(trainRate);
+
+    // store user inputs in newTrain object
+    var newTrain = {
+        name: trainName,
+        dest: trainDest,
+        start: trainStart,
+        rate: trainRate
+    };
+    console.log(newTrain);
+
+});
