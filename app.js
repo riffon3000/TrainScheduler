@@ -58,7 +58,7 @@ database.ref().on("child_added", function (childSnapshot) {
     var trainDest = snap.dest;
     console.log(trainDest);
     var trainStart = snap.start;
-    console.log(moment(trainStart, "X").format("HH:mm a"));
+    console.log(moment(trainStart, "X").format("h:mm a"));
     var trainRate = parseInt(snap.rate);
     console.log(trainRate);
 
