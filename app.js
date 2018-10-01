@@ -22,7 +22,7 @@ $("#add-train").on("click", function (event) {
     var trainDest = $("#dest-input").val().trim();
     console.log(trainDest);
     var trainStart = moment($("#start-input").val(), "HH:mm a").format("X");
-    console.log(moment(trainStart,"X").format("HH:mm a"));
+    console.log(moment(trainStart, "X").format("HH:mm a"));
     var trainRate = $("#rate-input").val();
     console.log(trainRate);
 
@@ -46,9 +46,9 @@ $("#add-train").on("click", function (event) {
 });
 
 // Event listener for addition to Firebase database and adding row to #new-trains tbody
-database.ref().on("child_added", function(childSnapshot){
+database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
-    
+
     // handle for childSnapshot.val();
     var snap = childSnapshot.val();
 
@@ -58,20 +58,22 @@ database.ref().on("child_added", function(childSnapshot){
     var trainDest = snap.dest;
     console.log(trainDest);
     var trainStart = snap.start;
-    console.log(moment(trainStart,"X").format("HH:mm a"));
-    var trainRate = snap.rate;
+    console.log(moment(trainStart, "X").format("HH:mm a"));
+    var trainRate = parseInt(snap.rate);
     console.log(trainRate);
 
     // calculate minutes away until next train arrival
-    var timeDiff = moment().diff(moment(trainStart));
+    var tStartConverted = moment(trainStart, "X");
+    console.log(tStartConverted);
+    var timeDiff = moment().diff(moment(tStartConverted), "m");
     console.log(timeDiff);
     var tRemain = timeDiff % trainRate;
-    console.log(timeDiff);
+    console.log(tRemain);
     var trainAway = trainRate - tRemain;
     console.log(trainAway);
 
     // calculate next train arrival
-    var trainNext = moment().add(trainAway);
+    var trainNext = moment().add(trainAway, "X").format("HH:mm a");
     console.log(trainNext);
 
     // create new row
@@ -81,8 +83,8 @@ database.ref().on("child_added", function(childSnapshot){
         $("<td>").text(trainRate),
         $("<td>").text(trainNext),
         $("<td>").text(trainAway)
-      );
+    );
 
     // append new row to table
-    $("new-trains > tbody").append(newRow);
+    $("#new-trains > tbody").append(newRow);
 });
