@@ -62,11 +62,17 @@ database.ref().on("child_added", function(childSnapshot){
     var trainRate = snap.rate;
     console.log(trainRate);
 
-    // calculate next train arrival
-    var trainNext = ;
-
     // calculate minutes away until next train arrival
-    var trainAway = ;
+    var timeDiff = moment().diff(moment(trainStart));
+    console.log(timeDiff);
+    var tRemain = timeDiff % trainRate;
+    console.log(timeDiff);
+    var trainAway = trainRate - tRemain;
+    console.log(trainAway);
+
+    // calculate next train arrival
+    var trainNext = moment().add(trainAway);
+    console.log(trainNext);
 
     // create new row
     var newRow = $("<tr>").append(
